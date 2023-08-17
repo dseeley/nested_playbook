@@ -50,7 +50,7 @@ class ActionModule(ActionBase):
 
                 while process.poll() is None:
                     try:
-                        nested_playbook_return = os.read(master, 4096).decode('utf-8')
+                        nested_playbook_return = os.read(master, 4096).decode('utf-8', errors='replace')
                         if nested_playbook_return:
                             output_str += "\n".join(indent_prefix + line for line in nested_playbook_return.splitlines()) + "\n"
                             print(output_str, end='', flush=True)
