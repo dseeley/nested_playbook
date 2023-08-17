@@ -1,0 +1,32 @@
+namespace: dseeley
+
+name: nested_playbook
+
+version: 0.0.0       # This is automatically filled by Jenkins on galaxy release with the current git release tag number.
+
+readme: README.md
+
+authors:
+- Dougal Seeley <github@dougalseeley.com>
+
+description: An Ansible action plugin to include (nest) a playbook.
+
+#license:
+#- BSD-3-Clause
+
+license_file: 'LICENSE'
+
+tags: ['system']
+
+dependencies: {}
+
+repository: https://github.com/dseeley/nested_playbook
+
+documentation: https://github.com/dseeley/nested_playbook/blob/master/README.md
+
+homepage: https://github.com/dseeley/nested_playbook
+
+issues: https://github.com/dseeley/nested_playbook/issues
+
+build_ignore: [ '.idea', '.gitignore' ]
+
