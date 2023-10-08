@@ -10,7 +10,7 @@ Create a playbook file to be called from within another, e.g:`test_nested.yml`:
 ```yaml
 - name: test
   hosts: localhost
-  gather_facts: no
+  gather_facts: false
   tasks:
     - debug: msg="Child playbook - 1"
 
@@ -27,7 +27,7 @@ Create the parent file.  Either: `test_parent__cmdline.yml`:
 ```yaml
 - name: test
   hosts: localhost
-  gather_facts: no
+  gather_facts: false
   tasks:
     - debug: msg="Parent playbook"
 
@@ -41,7 +41,7 @@ or: `test_parent__args.yml`:
 ```yaml
 - name: test
   hosts: localhost
-  gather_facts: no
+  gather_facts: false
   tasks:
     - debug: msg="Parent playbook"
 
