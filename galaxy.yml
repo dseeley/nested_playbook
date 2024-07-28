@@ -28,5 +28,5 @@ homepage: https://github.com/dseeley/nested_playbook
 
 issues: https://github.com/dseeley/nested_playbook/issues
 
-build_ignore: [ '.idea', '.gitignore' ]
+build_ignore: [ '.idea', '.gitignore', 'Dockerfile*' ]
 
