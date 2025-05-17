@@ -24,6 +24,10 @@ class ActionModule(ActionBase):
         playbook_cmdline = self._task.args.get('playbook_cmdline', None)
         indent_prefix = self._task.args.get('indent', 8) * " "
 
+        display.v(u'playbook_args: %s' % playbook_args)
+        display.v(u'playbook_path: %s' % playbook_path)
+        display.v(u'playbook_cmdline: %s' % playbook_cmdline)
+
         if not (playbook_cmdline or playbook_path):
             result['failed'] = True
             result['msg'] = f"Either playbook_cmdline or playbook_path is required"
@@ -39,9 +43,11 @@ class ActionModule(ActionBase):
             try:
                 # Create a pseudo-terminal pair (pty) to execute the playbook
                 master, slave = pty.openpty()
+                os.set_blocking(master, True)
+                os.set_blocking(slave, True)
 
                 # Use subprocess to execute the playbook and capture both stdout and stderr
-                process = subprocess.Popen(command, stdout=slave, stderr=slave, text=True, close_fds=True)
+                process = subprocess.Popen(command, stdin=slave, stdout=slave, stderr=slave, text=True, close_fds=True)
 
                 # Close the slave end of the pty in the parent process
                 os.close(slave)
@@ -53,7 +59,7 @@ class ActionModule(ActionBase):
                         nested_playbook_return = os.read(master, 4096).decode('utf-8', errors='replace')
                         if nested_playbook_return:
                             output_str += "\n".join(indent_prefix + line for line in nested_playbook_return.splitlines()) + "\n"
-                            print(output_str, end='', flush=True)
+                            display.display(msg=output_str, screen_only=True, newline=False)
                             output_str = ""
                     except OSError as e:
                         if e.errno == 5:  # Input/output error - ignore this as it results from reading from the file descriptor after it has closed itself (i.e. the playbook has finished)
